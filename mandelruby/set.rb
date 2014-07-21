@@ -13,15 +13,20 @@ module Mandelruby
       @window = [[-2.5, 1.0], [1.5, -1.0]]
       #how many iterations before output uses a different character for bail levels
       @character_resolution = 2
+      # chooses a number between 15 and 240 for the starting colour
+      @bg_colour = rand(15..240)
+      @fg_colour = rand(15..240)
     end
 
     def draw
       each_pixel do |x,y|
         @output += "\n" if new_row?
         mandelbrot(Complex(x,y))
+        @output += colour_for_iteration
         @output += character_for_iteration
+        @output += reset_colour
       end
-      
+      @output += reset_colour
       @output
     end
 
@@ -40,7 +45,29 @@ module Mandelruby
         @new_row = true
       end
     end
-    
+
+    def colour_for_iteration
+      return reset_colour if @iteration == @dwell
+
+      bg_colour + fg_colour
+    end
+
+    def bg_colour
+      ["\e[48;5;", (@bg_colour + colour_index), "m"].join
+    end
+
+    def fg_colour
+      ["\e[38;5;", (@fg_colour + colour_index), "m"].join
+    end
+
+    def reset_colour
+      "\e[48;2;49m\e[38;2;39m"
+    end
+
+    def colour_index
+      char_list.index(char_list[@iteration/@character_resolution]) || 8
+    end
+
     def character_for_iteration
       return " " if @iteration == @dwell
       char_list[@iteration/@character_resolution] || "."
