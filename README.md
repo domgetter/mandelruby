@@ -1,4 +1,4 @@
-mandleruby
+mandelruby
 ==========
 
-A Mandlebrot fractal viewer written in Ruby and displays in the console.
+A Mandelbrot fractal viewer written in Ruby and displays in the console.
