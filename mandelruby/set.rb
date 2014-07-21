@@ -1,7 +1,7 @@
 module Mandelruby
 
   class Set
-  
+
     def initialize
       @output = ""
       # maximum iterations the recursive loop tries before bailing out and
@@ -14,7 +14,7 @@ module Mandelruby
       #how many iterations before output uses a different character for bail levels
       @character_resolution = 2
     end
-    
+
     def draw
       each_pixel do |x,y|
         @output += "\n" if new_row?
@@ -24,13 +24,13 @@ module Mandelruby
       
       @output
     end
-    
+
     private
-    
+
     def new_row?
       @new_row
     end
-    
+
     def each_pixel
       column.each do |y|
         row.each do |x|
@@ -51,27 +51,27 @@ module Mandelruby
       @iteration = 0
       @dwell.times { z = z**2 + c; @iteration += 1; break if (z.abs >= 2)}
     end
-    
+
     def char_list
       @char_list ||= ["X","O","#","*","o","%","=","-","."]
     end
-    
+
     def x_increment
       (@window[1][0]-@window[0][0])/@resolution[0]
     end
-    
+
     def y_increment
       (@window[1][1]-@window[0][1])/@resolution[1]
     end
-    
+
     def column
       (@window[0][1]).step(@window[1][1],y_increment).to_a
     end
-    
+
     def row
       (@window[0][0]).step(@window[1][0],x_increment).to_a
     end
-    
+
   end
 
 end
