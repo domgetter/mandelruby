@@ -10,7 +10,7 @@ module Mandelruby
       #resolution of characters in output
       @resolution = [80.0,40.0]
       # display window from top-left corner to bottom-right corner of complex plane
-      @window = [[-2.0, 1.0], [0.5, -1.0]]
+      @window = [[-2.5, 1.0], [1.5, -1.0]]
       #how many iterations before output uses a different character for bail levels
       @character_resolution = 2
     end
