@@ -6,7 +6,7 @@ module Mandelruby
       @output = ""
       # maximum iterations the recursive loop tries before bailing out and
       # considers a point in the set
-      @dwell = 200
+      @dwell = 100
       #resolution of characters in output
       @resolution = [80.0,40.0]
       # display window from top-left corner to bottom-right corner of complex plane
@@ -43,11 +43,7 @@ module Mandelruby
     
     def character_for_iteration
       return " " if @iteration == @dwell
-      if (@iteration-1)/@character_resolution > 7
-        char_list[8]
-      else
-        char_list[(@iteration-1)/@character_resolution]
-      end
+      char_list[@iteration/@character_resolution] || "."
     end
 
     def mandelbrot(c)
@@ -57,7 +53,7 @@ module Mandelruby
     end
     
     def char_list
-      @char_list ||= ["X","O","#","*","o","%","=","-",".","X"]
+      @char_list ||= ["X","O","#","*","o","%","=","-","."]
     end
     
     def x_increment
