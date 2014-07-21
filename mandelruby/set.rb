@@ -3,7 +3,6 @@ module Mandelruby
   class Set
   
     def initialize
-      @char_list = ["X","O","#","*","o","%","=","-",".","X"]
       @output = ""
       @dwell = 200
       #resolution of characters in output
@@ -30,9 +29,9 @@ module Mandelruby
     
     def char_for(iteration)
       if (iteration-1)/@character_resolution > 7
-        @char_list[8]
+        char_list[8]
       else
-        @char_list[(iteration-1)/@character_resolution]
+        char_list[(iteration-1)/@character_resolution]
       end
     end
 
@@ -41,6 +40,10 @@ module Mandelruby
       iteration = 0
       @dwell.times { z = z*z + c; iteration += 1; break if (z.abs >= 2)}
       iteration == @dwell ? " " : char_for(iteration)
+    end
+    
+    def char_list
+      @char_list ||= ["X","O","#","*","o","%","=","-",".","X"]
     end
     
   end
