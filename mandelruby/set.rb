@@ -4,6 +4,8 @@ module Mandelruby
   
     def initialize
       @output = ""
+      # maximum iterations the recursive loop tries before bailing out and
+      # considers a point in the set
       @dwell = 200
       #resolution of characters in output
       @resolution = [80.0,40.0]
@@ -14,36 +16,64 @@ module Mandelruby
     end
     
     def draw
-      x_res = (@window[1][0]-@window[0][0])/@resolution[0]
-      y_res = (@window[1][1]-@window[0][1])/@resolution[1]
-      (@window[0][1]).step(@window[1][1],y_res) do |y|
-        (@window[0][0]).step(@window[1][0],x_res) do |x|
-          @output += mandelbrot(Complex(x,y))
-        end
-        @output += "\n"
+      each_pixel do |x,y|
+        @output += "\n" if new_row?
+        mandelbrot(Complex(x,y))
+        @output += character_for_iteration
       end
+      
       @output
     end
     
     private
     
-    def char_for(iteration)
-      if (iteration-1)/@character_resolution > 7
+    def new_row?
+      @new_row
+    end
+    
+    def each_pixel
+      column.each do |y|
+        row.each do |x|
+          yield x,y
+          @new_row = false
+        end
+        @new_row = true
+      end
+    end
+    
+    def character_for_iteration
+      return " " if @iteration == @dwell
+      if (@iteration-1)/@character_resolution > 7
         char_list[8]
       else
-        char_list[(iteration-1)/@character_resolution]
+        char_list[(@iteration-1)/@character_resolution]
       end
     end
 
     def mandelbrot(c)
       z = 0
-      iteration = 0
-      @dwell.times { z = z*z + c; iteration += 1; break if (z.abs >= 2)}
-      iteration == @dwell ? " " : char_for(iteration)
+      @iteration = 0
+      @dwell.times { z = z**2 + c; @iteration += 1; break if (z.abs >= 2)}
     end
     
     def char_list
       @char_list ||= ["X","O","#","*","o","%","=","-",".","X"]
+    end
+    
+    def x_increment
+      (@window[1][0]-@window[0][0])/@resolution[0]
+    end
+    
+    def y_increment
+      (@window[1][1]-@window[0][1])/@resolution[1]
+    end
+    
+    def column
+      (@window[0][1]).step(@window[1][1],y_increment).to_a
+    end
+    
+    def row
+      (@window[0][0]).step(@window[1][0],x_increment).to_a
     end
     
   end
