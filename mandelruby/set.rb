@@ -54,7 +54,7 @@ module Mandelruby
     end
 
     def color_in(character)
-      bg_color(order) + fg_color(order) + character + reset_color
+      Crayon.new(@bg_color, @fg_color).color_in(character, order)
     end
     
     def bg_color(offset)
@@ -113,6 +113,34 @@ module Mandelruby
     attr_reader :x, :y
     def initialize(x, y)
       @x, @y = x, y
+    end
+
+  end
+
+  class Crayon
+
+    attr_reader :background, :foreground
+    def initialize(background, foreground)
+      @background = background
+      @foreground = foreground
+    end
+
+    def color_in(character, offset)
+      bg_color(offset) + fg_color(offset) + character + reset_color
+    end
+
+    private
+    
+    def bg_color(offset)
+      ["\e[48;5;", (background + offset), "m"].join
+    end
+
+    def fg_color(offset)
+      ["\e[38;5;", (foreground + offset), "m"].join
+    end
+
+    def reset_color
+      "\e[0m"
     end
 
   end
