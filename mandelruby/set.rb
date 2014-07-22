@@ -125,4 +125,10 @@ module Mandelruby
 
   end
 
+  class NullCrayon
+    def color_in(character, args*)
+      character
+    end
+  end
+
 end
