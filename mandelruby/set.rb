@@ -25,12 +25,9 @@ module Mandelruby
       @dwell = 100
       #how many iterations before output uses a different character for bail levels
       @character_resolution = 2
-      # chooses a number between 15 and 240 for the starting color
-      @bg_color = rand(15..240)
-      @fg_color = rand(15..240)
       # only display color output if --color option passed
       @color = color
-      @crayon = Crayon.new(@bg_color, @fg_color)
+      @crayon = Crayon.new
     end
 
     def calculate(c)
@@ -106,9 +103,9 @@ module Mandelruby
   class Crayon
 
     attr_reader :background, :foreground
-    def initialize(background, foreground)
-      @background = background
-      @foreground = foreground
+    def initialize
+      @background = rand(15..240)
+      @foreground = rand(15..240)
     end
 
     def color_in(character, offset)
