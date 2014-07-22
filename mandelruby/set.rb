@@ -35,16 +35,6 @@ module Mandelruby
       @new_row
     end
 
-    def each_pixel
-      @window.rows.each do |y|
-        @window.columns.each do |x|
-          yield x,y
-          @new_row = false
-        end
-        @new_row = true
-      end
-    end
-
     def color_for_iteration
       bg_color + fg_color
     end
