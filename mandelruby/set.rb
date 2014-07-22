@@ -54,13 +54,9 @@ module Mandelruby
     end
 
     def color_in(character)
-      color_for_iteration + character + reset_color
+      bg_color + fg_color + character + reset_color
     end
-
-    def color_for_iteration
-      bg_color + fg_color
-    end
-
+    
     def bg_color
       ["\e[48;5;", (@bg_color + color_index), "m"].join
     end
