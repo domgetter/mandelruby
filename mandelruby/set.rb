@@ -8,11 +8,8 @@ module Mandelruby
     end
 
     def to_s
-      @window.rows.map { |y|
-        @window.columns.map { |x| 
-          pixel = Pixel.new(x,y)
-          pixel.to_mandelbrot(@mandelbrot)
-        }.join("")
+      @window.rows.map { |row|
+        row.map { |pixel| pixel.to_mandelbrot(@mandelbrot) }.join("")
       }.join("\n")
     end
 
@@ -64,7 +61,11 @@ module Mandelruby
     end
     
     def rows
-      top_left.y.step(bottom_right.y, y_increment).to_a
+      top_left.y.step(bottom_right.y, y_increment).map do |y_coord|
+        top_left.x.step(bottom_right.x, x_increment).map do |x_coord|
+          Pixel.new(x_coord, y_coord)
+        end
+      end
     end
 
     def columns
