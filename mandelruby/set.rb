@@ -5,19 +5,12 @@ module Mandelruby
     def initialize(color = false)
       @window = Window.new
       @mandelbrot = Mandelbrot.new(color)
-      @color = color
     end
 
     def draw
       @window.rows.map do |y|
-        @window.columns.map { |x| calculate(Complex(x,y)) }.join("")
+        @window.columns.map { |x| @mandelbrot.calculate(Complex(x,y)) }.join("")
       end.join("\n")
-    end
-
-    private
-
-    def calculate(c)
-      @mandelbrot.calculate(c)
     end
   end
 
