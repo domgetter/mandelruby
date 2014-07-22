@@ -3,18 +3,17 @@ module Mandelruby
     CHARACTERS = ["X","O","#","*","o","%","=","-","."]
 
     def initialize(cartridge)
-      # maximum iterations the recursive loop tries before bailing out and
+      # maximum iterations the loop tries before bailing out and
       # considers a point in the set
       @dwell = 100
-      #how many iterations before output uses a different character for bail levels
+      # how many iterations before output uses a different character for bail levels
       @character_resolution = 2
       # only display color output if --color option passed
       @cartridge = cartridge
     end
 
     def calculate(c)
-      @iteration = iteration_for(c)
-      character_for_iteration
+      character_for_complex(c)
     end
 
     def iteration_for(complex)
@@ -25,14 +24,17 @@ module Mandelruby
       end
     end
 
-    def character_for_iteration
-      return " " if @iteration == 100
+    def character_for_complex(c)
+      iteration = iteration_for(c)
+      return " " if iteration == 100
+
+      order = orderize(iteration)
       character = CHARACTERS[order]
       @cartridge.color_in(character, order)
     end
 
-    def order
-      quotient = @iteration/@character_resolution
+    def orderize(iteration)
+      quotient = iteration/@character_resolution
       quotient > 8 ? 8 : quotient
     end
   end
