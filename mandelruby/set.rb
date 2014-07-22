@@ -43,7 +43,8 @@ module Mandelruby
       return " " if @iteration == @dwell
       
       if @color
-        color_in(char_list[order])
+        character = char_list[order]
+        Crayon.new(@bg_color, @fg_color).color_in(character, order)
       else
         char_list[order]
       end
@@ -51,22 +52,6 @@ module Mandelruby
 
     def char_list
       ["X","O","#","*","o","%","=","-","."]
-    end
-
-    def color_in(character)
-      Crayon.new(@bg_color, @fg_color).color_in(character, order)
-    end
-    
-    def bg_color(offset)
-      ["\e[48;5;", (@bg_color + offset), "m"].join
-    end
-
-    def fg_color(offset)
-      ["\e[38;5;", (@fg_color + offset), "m"].join
-    end
-
-    def reset_color
-      "\e[0m"
     end
 
     def order
