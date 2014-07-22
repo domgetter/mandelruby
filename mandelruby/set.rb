@@ -18,9 +18,7 @@ module Mandelruby
 
     def draw
       @window.rows.map do |y|
-        @window.columns.map do |x|
-          mandelbrot(Complex(x,y))
-        end.join("")
+        @window.columns.map { |x| mandelbrot(Complex(x,y)) }.join("")
       end.join("\n")
     end
 
