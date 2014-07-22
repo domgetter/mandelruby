@@ -4,6 +4,7 @@ module Mandelruby
 
     def initialize(color = false)
       @window = Window.new
+      @mandelbrot = Mandelbrot.new(color)
       @color = color
     end
 
@@ -16,7 +17,7 @@ module Mandelruby
     private
 
     def calculate(c)
-      Mandelbrot.new(@color).calculate(c)
+      @mandelbrot.calculate(c)
     end
   end
 
