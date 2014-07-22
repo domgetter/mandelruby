@@ -58,19 +58,15 @@ module Mandelruby
     end
     
     def bg_color
-      ["\e[48;5;", (@bg_color + color_index), "m"].join
+      ["\e[48;5;", (@bg_color + order), "m"].join
     end
 
     def fg_color
-      ["\e[38;5;", (@fg_color + color_index), "m"].join
+      ["\e[38;5;", (@fg_color + order), "m"].join
     end
 
     def reset_color
       "\e[0m"
-    end
-
-    def color_index
-      order
     end
 
     def order
