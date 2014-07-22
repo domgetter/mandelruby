@@ -20,7 +20,6 @@ module Mandelruby
       @window.rows.map do |y|
         @window.columns.map do |x|
           mandelbrot(Complex(x,y))
-          character_for_iteration
         end.join("")
       end.join("\n")
     end
@@ -61,6 +60,7 @@ module Mandelruby
       z = 0
       @iteration = 0
       @dwell.times { z = z**2 + c; @iteration += 1; break if (z.abs >= 2)}
+      character_for_iteration
     end
 
     def char_list
