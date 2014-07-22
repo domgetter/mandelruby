@@ -3,7 +3,6 @@ module Mandelruby
   class Set
 
     def initialize(color = false)
-      @output = ""
       # maximum iterations the recursive loop tries before bailing out and
       # considers a point in the set
       @dwell = 100
@@ -18,23 +17,16 @@ module Mandelruby
     end
 
     def draw
-      @window.rows.each do |y|
-        @window.columns.each do |x|
+      @window.rows.map do |y|
+        @window.columns.map do |x|
           mandelbrot(Complex(x,y))
-          @output += character_for_iteration
-        end
-        @output += "\n"
-      end
-
-      @output
+          character_for_iteration
+        end.join("")
+      end.join("\n")
     end
 
     private
-
-    def new_row?
-      @new_row
-    end
-
+    
     def color_for_iteration
       bg_color + fg_color
     end
