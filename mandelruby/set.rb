@@ -8,13 +8,17 @@ module Mandelruby
     end
 
     def draw
-      @window.rows.map do |y|
-        @window.columns.map { |x| @mandelbrot.calculate(Complex(x,y)) }.join("")
-      end.join("\n")
+      @window.rows.map { |y|
+        @window.columns.map { |x| 
+          @mandelbrot.calculate(Complex(x,y)) 
+        }.join("")
+      }.join("\n")
     end
+
   end
 
   class Mandelbrot
+
     def initialize(color)
       # maximum iterations the recursive loop tries before bailing out and
       # considers a point in the set
@@ -72,6 +76,7 @@ module Mandelruby
   end
 
   class Window
+
     attr_reader :top_left, :bottom_right, :resolution
     def initialize
       # display window from top-left corner to bottom-right corner of complex plane
@@ -103,10 +108,12 @@ module Mandelruby
   end
 
   class Pixel
+
     attr_reader :x, :y
     def initialize(x, y)
       @x, @y = x, y
     end
+
   end
 
 end
