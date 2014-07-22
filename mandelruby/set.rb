@@ -88,11 +88,11 @@ module Mandelruby
     attr_reader :top_left, :bottom_right, :resolution
     def initialize
       # display window from top-left corner to bottom-right corner of complex plane
-      @top_left = Point.new(-2.5, 1.0)
-      @bottom_right = Point.new(1.5, -1.0)
+      @top_left = Pixel.new(-2.5, 1.0)
+      @bottom_right = Pixel.new(1.5, -1.0)
 
       #resolution of characters in output
-      @resolution = Point.new(80.0, 40.0)
+      @resolution = Pixel.new(80.0, 40.0)
     end
     
     def column
@@ -115,7 +115,7 @@ module Mandelruby
 
   end
 
-  class Point
+  class Pixel
     attr_reader :x, :y
     def initialize(x, y)
       @x, @y = x, y
