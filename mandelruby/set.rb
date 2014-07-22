@@ -86,32 +86,31 @@ module Mandelruby
 
   class Window
     attr_reader :top_left, :bottom_right, :resolution
-    attr_reader :new_top_left, :new_bottom_right, :new_resolution
     def initialize
       # display window from top-left corner to bottom-right corner of complex plane
-      @new_top_left = Point.new(-2.5, 1.0)
-      @new_bottom_right = Point.new(1.5, -1.0)
+      @top_left = Point.new(-2.5, 1.0)
+      @bottom_right = Point.new(1.5, -1.0)
 
       #resolution of characters in output
-      @new_resolution = Point.new(80.0, 40.0)
+      @resolution = Point.new(80.0, 40.0)
     end
     
     def column
-      new_top_left.y.step(new_bottom_right.y, y_increment).to_a
+      top_left.y.step(bottom_right.y, y_increment).to_a
     end
 
     def row
-      new_top_left.x.step(new_bottom_right.x, x_increment).to_a
+      top_left.x.step(bottom_right.x, x_increment).to_a
     end
 
     private
 
     def x_increment
-      (new_bottom_right.x - new_top_left.x) / new_resolution.x
+      (bottom_right.x - top_left.x) / resolution.x
     end
 
     def y_increment
-      (new_bottom_right.y - new_top_left.y) / new_resolution.y
+      (bottom_right.y - top_left.y) / resolution.y
     end
 
   end
