@@ -5,8 +5,8 @@ module Mandelruby
       @x, @y = x, y
     end
 
-    def to_mandelbrot(calculator)
-      calculator.calculate(Complex(x,y))
+    def to_c
+      Complex(x,y)
     end
   end
 end

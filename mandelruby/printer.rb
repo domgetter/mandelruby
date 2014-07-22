@@ -12,8 +12,8 @@ module Mandelruby
       @cartridge = cartridge
     end
 
-    def calculate(c)
-      character_for_complex(c)
+    def print_pixel(pixel)
+      character_for_complex(pixel.to_c)
     end
 
     def iteration_for(complex)

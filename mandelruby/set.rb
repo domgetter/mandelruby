@@ -13,7 +13,7 @@ module Mandelruby
     def to_s
       @window.rows.map { |pixel_row|
         pixel_row.map { |pixel| 
-          pixel.to_mandelbrot(@printer) 
+          @printer.print_pixel(pixel)
         }.join("")
       }.join("\n")
     end
