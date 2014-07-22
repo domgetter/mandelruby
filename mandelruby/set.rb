@@ -54,15 +54,15 @@ module Mandelruby
     end
 
     def color_in(character)
-      bg_color + fg_color + character + reset_color
+      bg_color(order) + fg_color(order) + character + reset_color
     end
     
-    def bg_color
-      ["\e[48;5;", (@bg_color + order), "m"].join
+    def bg_color(offset)
+      ["\e[48;5;", (@bg_color + offset), "m"].join
     end
 
-    def fg_color
-      ["\e[38;5;", (@fg_color + order), "m"].join
+    def fg_color(offset)
+      ["\e[38;5;", (@fg_color + offset), "m"].join
     end
 
     def reset_color
