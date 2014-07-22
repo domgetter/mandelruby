@@ -43,7 +43,7 @@ module Mandelruby
       return " " if @iteration == @dwell
       
       if @color
-        color_for_iteration + (char_list[@iteration/@character_resolution] || ".") + reset_color
+        color_in(char_list[@iteration/@character_resolution] || ".")
       else
         char_list[@iteration/@character_resolution] || "."
       end
@@ -51,6 +51,10 @@ module Mandelruby
 
     def char_list
       @char_list ||= ["X","O","#","*","o","%","=","-","."]
+    end
+
+    def color_in(character)
+      color_for_iteration + character + reset_color
     end
 
     def color_for_iteration
