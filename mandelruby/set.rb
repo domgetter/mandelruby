@@ -9,14 +9,14 @@ module Mandelruby
 
     def draw
       @window.rows.map do |y|
-        @window.columns.map { |x| mandelbrot(Complex(x,y)) }.join("")
+        @window.columns.map { |x| calculate(Complex(x,y)) }.join("")
       end.join("\n")
     end
 
     private
 
-    def mandelbrot(c)
-      Mandelbrot.new(@color).mandelbrot(c)
+    def calculate(c)
+      Mandelbrot.new(@color).calculate(c)
     end
   end
 
@@ -34,7 +34,7 @@ module Mandelruby
       @color = color
     end
 
-    def mandelbrot(c)
+    def calculate(c)
       z = 0
       @iteration = 0
       @dwell.times { z = z**2 + c; @iteration += 1; break if (z.abs >= 2)}
