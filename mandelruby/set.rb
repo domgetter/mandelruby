@@ -33,8 +33,8 @@ module Mandelruby
     end
 
     def each_pixel
-      @window.column.each do |y|
-        @window.row.each do |x|
+      @window.rows.each do |y|
+        @window.columns.each do |x|
           yield x,y
           @new_row = false
         end
@@ -95,11 +95,11 @@ module Mandelruby
       @resolution = Pixel.new(80.0, 40.0)
     end
     
-    def column
+    def rows
       top_left.y.step(bottom_right.y, y_increment).to_a
     end
 
-    def row
+    def columns
       top_left.x.step(bottom_right.x, x_increment).to_a
     end
 
