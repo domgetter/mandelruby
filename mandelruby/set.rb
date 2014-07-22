@@ -6,7 +6,8 @@ module Mandelruby
 
     def initialize(color = false)
       @window = Window.new
-      @mandelbrot = Mandelbrot.new(color)
+      crayon = color ? Crayon.new : NullCrayon.new
+      @mandelbrot = Mandelbrot.new(crayon)
     end
 
     def to_s
@@ -20,14 +21,14 @@ module Mandelruby
   class Mandelbrot
     CHARACTERS = ["X","O","#","*","o","%","=","-","."]
 
-    def initialize(color)
+    def initialize(crayon)
       # maximum iterations the recursive loop tries before bailing out and
       # considers a point in the set
       @dwell = 100
       #how many iterations before output uses a different character for bail levels
       @character_resolution = 2
       # only display color output if --color option passed
-      @crayon = color ? Crayon.new : NullCrayon.new
+      @crayon = crayon
     end
 
     def calculate(c)
