@@ -13,8 +13,10 @@ module Mandelruby
     end
 
     def print_pixel(pixel)
-      character_for_complex(pixel.to_c)
+      complex_to_character(pixel.to_c)
     end
+
+    private
 
     def iteration_for(complex)
       (1..100).inject(0) do |z, iteration|
@@ -24,7 +26,7 @@ module Mandelruby
       end
     end
 
-    def character_for_complex(c)
+    def complex_to_character(c)
       iteration = iteration_for(c)
       return " " if iteration == 100
 
