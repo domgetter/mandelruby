@@ -10,7 +10,8 @@ module Mandelruby
     def to_s
       @window.rows.map { |y|
         @window.columns.map { |x| 
-          @mandelbrot.calculate(Complex(x,y)) 
+          pixel = Pixel.new(x,y)
+          pixel.to_mandelbrot(@mandelbrot)
         }.join("")
       }.join("\n")
     end
@@ -87,6 +88,10 @@ module Mandelruby
     attr_reader :x, :y
     def initialize(x, y)
       @x, @y = x, y
+    end
+
+    def to_mandelbrot(calculator)
+      calculator.calculate(Complex(x,y))
     end
 
   end
