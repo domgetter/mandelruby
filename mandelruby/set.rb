@@ -43,9 +43,9 @@ module Mandelruby
       return " " if @iteration == @dwell
       
       if @color
-        color_in(char_list[@iteration/@character_resolution] || ".")
+        color_in(char_list[order])
       else
-        char_list[@iteration/@character_resolution] || "."
+        char_list[order]
       end
     end
 
@@ -70,7 +70,12 @@ module Mandelruby
     end
 
     def color_index
-      char_list.index(char_list[@iteration/@character_resolution]) || 8
+      order
+    end
+
+    def order
+      quotient = @iteration/@character_resolution
+      quotient > 8 ? 8 : quotient
     end
 
   end
