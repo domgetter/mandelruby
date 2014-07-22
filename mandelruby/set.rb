@@ -18,11 +18,14 @@ module Mandelruby
     end
 
     def draw
-      each_pixel do |x,y|
-        @output += "\n" if new_row?
-        mandelbrot(Complex(x,y))
-        @output += character_for_iteration
+      @window.rows.each do |y|
+        @window.columns.each do |x|
+          mandelbrot(Complex(x,y))
+          @output += character_for_iteration
+        end
+        @output += "\n"
       end
+
       @output
     end
 
