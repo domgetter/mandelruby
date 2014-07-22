@@ -50,7 +50,7 @@ module Mandelruby
     end
 
     def char_list
-      @char_list ||= ["X","O","#","*","o","%","=","-","."]
+      ["X","O","#","*","o","%","=","-","."]
     end
 
     def color_in(character)
