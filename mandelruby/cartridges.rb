@@ -1,12 +1,11 @@
 module Mandelruby
-  class NullCrayon
+  class Black
     def color_in(character, *args)
       character
     end
   end
 
-  class Crayon
-
+  class Color
     attr_reader :background, :foreground
     def initialize
       @background = rand(15..240)
@@ -30,6 +29,5 @@ module Mandelruby
     def reset_color
       "\e[0m"
     end
-
   end
 end

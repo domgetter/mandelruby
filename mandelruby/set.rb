@@ -1,4 +1,4 @@
-require_relative 'crayons'
+require_relative 'cartridges'
 
 module Mandelruby
 
@@ -6,8 +6,8 @@ module Mandelruby
 
     def initialize(color = false)
       @window = Window.new
-      crayon = color ? Crayon.new : NullCrayon.new
-      @mandelbrot = Mandelbrot.new(crayon)
+      cartridge = color ? Color.new : Black.new
+      @mandelbrot = Printer.new(cartridge)
     end
 
     def to_s
@@ -18,17 +18,17 @@ module Mandelruby
 
   end
 
-  class Mandelbrot
+  class Printer
     CHARACTERS = ["X","O","#","*","o","%","=","-","."]
 
-    def initialize(crayon)
+    def initialize(cartridge)
       # maximum iterations the recursive loop tries before bailing out and
       # considers a point in the set
       @dwell = 100
       #how many iterations before output uses a different character for bail levels
       @character_resolution = 2
       # only display color output if --color option passed
-      @crayon = crayon
+      @cartridge = cartridge
     end
 
     def calculate(c)
@@ -41,7 +41,7 @@ module Mandelruby
     def character_for_iteration
       return " " if @iteration == @dwell
       character = CHARACTERS[order]
-      @crayon.color_in(character, order)
+      @cartridge.color_in(character, order)
     end
 
     def order
