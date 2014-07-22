@@ -8,8 +8,8 @@ module Mandelruby
     end
 
     def to_s
-      @window.rows.map { |row|
-        row.map { |pixel| pixel.to_mandelbrot(@mandelbrot) }.join("")
+      @window.rows.map { |pixel_row|
+        pixel_row.map { |pixel| pixel.to_mandelbrot(@mandelbrot) }.join("")
       }.join("\n")
     end
 
@@ -61,25 +61,21 @@ module Mandelruby
     end
     
     def rows
-      top_left.y.step(bottom_right.y, y_increment).map do |y_coord|
-        top_left.x.step(bottom_right.x, x_increment).map do |x_coord|
-          Pixel.new(x_coord, y_coord)
-        end
+      y_axis.map do |y_coord|
+        x_axis.map { |x_coord| Pixel.new(x_coord, y_coord) }
       end
-    end
-
-    def columns
-      top_left.x.step(bottom_right.x, x_increment).to_a
     end
 
     private
 
-    def x_increment
-      (bottom_right.x - top_left.x) / resolution.x
+    def x_axis
+      interval = (bottom_right.x - top_left.x) / resolution.x
+      (top_left.x .. bottom_right.x).step(interval)
     end
 
-    def y_increment
-      (bottom_right.y - top_left.y) / resolution.y
+    def y_axis
+      interval = (top_left.y - bottom_right.y) / resolution.y
+      (bottom_right.y .. top_left.y).step(interval).reverse_each
     end
 
   end
