@@ -13,14 +13,20 @@ module Mandelruby
     end
 
     def calculate(c)
-      z = 0
-      @iteration = 0
-      @dwell.times { z = z**2 + c; @iteration += 1; break if (z.abs >= 2)}
+      @iteration = iteration_for(c)
       character_for_iteration
     end
 
+    def iteration_for(complex)
+      (1..100).inject(0) do |z, iteration|
+        break 100 if iteration == 100
+        break iteration-1 if z.abs >= 2
+        z**2 + complex
+      end
+    end
+
     def character_for_iteration
-      return " " if @iteration == @dwell
+      return " " if @iteration == 100
       character = CHARACTERS[order]
       @cartridge.color_in(character, order)
     end
