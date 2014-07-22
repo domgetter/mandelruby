@@ -7,12 +7,12 @@ module Mandelruby
     def initialize(color = false)
       @window = Window.new
       cartridge = color ? Color.new : Black.new
-      @mandelbrot = Printer.new(cartridge)
+      @printer = Printer.new(cartridge)
     end
 
     def to_s
       @window.rows.map { |pixel_row|
-        pixel_row.map { |pixel| pixel.to_mandelbrot(@mandelbrot) }.join("")
+        pixel_row.map { |pixel| pixel.to_mandelbrot(@printer) }.join("")
       }.join("\n")
     end
   end
