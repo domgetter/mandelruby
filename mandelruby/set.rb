@@ -7,7 +7,7 @@ module Mandelruby
       @mandelbrot = Mandelbrot.new(color)
     end
 
-    def draw
+    def to_s
       @window.rows.map { |y|
         @window.columns.map { |x| 
           @mandelbrot.calculate(Complex(x,y)) 
