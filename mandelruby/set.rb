@@ -30,6 +30,7 @@ module Mandelruby
       @fg_color = rand(15..240)
       # only display color output if --color option passed
       @color = color
+      @crayon = Crayon.new(@bg_color, @fg_color)
     end
 
     def calculate(c)
@@ -44,7 +45,7 @@ module Mandelruby
       
       if @color
         character = char_list[order]
-        Crayon.new(@bg_color, @fg_color).color_in(character, order)
+        @crayon.color_in(character, order)
       else
         char_list[order]
       end
