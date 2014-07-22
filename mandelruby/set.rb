@@ -18,6 +18,7 @@ module Mandelruby
       @fg_color = rand(15..240)
       # only display color output if --color option passed
       @color = color
+      @new_window = Window.new
     end
 
     def draw
@@ -86,19 +87,19 @@ module Mandelruby
     end
 
     def x_increment
-      (@window[1][0]-@window[0][0])/@resolution[0]
+      @new_window.x_increment
     end
 
     def y_increment
-      (@window[1][1]-@window[0][1])/@resolution[1]
+      @new_window.y_increment
     end
 
     def column
-      (@window[0][1]).step(@window[1][1],y_increment).to_a
+      @new_window.column
     end
 
     def row
-      (@window[0][0]).step(@window[1][0],x_increment).to_a
+      @new_window.row
     end
 
   end
