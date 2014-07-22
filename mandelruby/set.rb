@@ -103,4 +103,29 @@ module Mandelruby
 
   end
 
+  class Window
+    attr_reader :top_left, :bottom_right, :resolution
+    def initialize
+      @top_left = [-2.5, 1.0]
+      @bottom_right = [1.5, -1.0]
+      @resolution = [80.0, 40.0]
+    end
+    
+    def x_increment
+      (@bottom_right[0] - @top_left[0]) / @resolution[0]
+    end
+
+    def y_increment
+      (@bottom_right[1] - @top_left[1]) / @resolution[1]
+    end
+
+    def column
+      @top_left[1].step(@bottom_right[1], y_increment).to_a
+    end
+
+    def row
+      @top_left[0].step(@bottom_right[0], x_increment).to_a
+    end
+  end
+
 end
