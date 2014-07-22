@@ -7,10 +7,7 @@ module Mandelruby
       # maximum iterations the recursive loop tries before bailing out and
       # considers a point in the set
       @dwell = 100
-      #resolution of characters in output
-      @resolution = [80.0,40.0]
-      # display window from top-left corner to bottom-right corner of complex plane
-      @window = [[-2.5, 1.0], [1.5, -1.0]]
+      @window = Window.new
       #how many iterations before output uses a different character for bail levels
       @character_resolution = 2
       # chooses a number between 15 and 240 for the starting color
@@ -18,7 +15,6 @@ module Mandelruby
       @fg_color = rand(15..240)
       # only display color output if --color option passed
       @color = color
-      @new_window = Window.new
     end
 
     def draw
@@ -87,19 +83,19 @@ module Mandelruby
     end
 
     def x_increment
-      @new_window.x_increment
+      @window.x_increment
     end
 
     def y_increment
-      @new_window.y_increment
+      @window.y_increment
     end
 
     def column
-      @new_window.column
+      @window.column
     end
 
     def row
-      @new_window.row
+      @window.row
     end
 
   end
@@ -107,8 +103,11 @@ module Mandelruby
   class Window
     attr_reader :top_left, :bottom_right, :resolution
     def initialize
+      # display window from top-left corner to bottom-right corner of complex plane
       @top_left = [-2.5, 1.0]
       @bottom_right = [1.5, -1.0]
+
+      #resolution of characters in output
       @resolution = [80.0, 40.0]
     end
     
