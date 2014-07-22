@@ -27,8 +27,7 @@ module Mandelruby
       #how many iterations before output uses a different character for bail levels
       @character_resolution = 2
       # only display color output if --color option passed
-      @color = color
-      @crayon = Crayon.new
+      @crayon = color ? Crayon.new : NullCrayon.new
     end
 
     def calculate(c)
@@ -40,13 +39,8 @@ module Mandelruby
 
     def character_for_iteration
       return " " if @iteration == @dwell
-      
-      if @color
-        character = CHARACTERS[order]
-        @crayon.color_in(character, order)
-      else
-        CHARACTERS[order]
-      end
+      character = CHARACTERS[order]
+      @crayon.color_in(character, order)
     end
 
     def order
@@ -126,7 +120,7 @@ module Mandelruby
   end
 
   class NullCrayon
-    def color_in(character, args*)
+    def color_in(character, *args)
       character
     end
   end
