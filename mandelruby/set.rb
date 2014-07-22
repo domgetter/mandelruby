@@ -96,21 +96,21 @@ module Mandelruby
     end
     
     def column
-      @top_left[1].step(@bottom_right[1], y_increment).to_a
+      top_left[1].step(bottom_right[1], y_increment).to_a
     end
 
     def row
-      @top_left[0].step(@bottom_right[0], x_increment).to_a
+      top_left[0].step(bottom_right[0], x_increment).to_a
     end
 
     private
 
     def x_increment
-      (@bottom_right[0] - @top_left[0]) / @resolution[0]
+      (bottom_right[0] - top_left[0]) / resolution[0]
     end
 
     def y_increment
-      (@bottom_right[1] - @top_left[1]) / @resolution[1]
+      (bottom_right[1] - top_left[1]) / resolution[1]
     end
 
   end
