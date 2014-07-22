@@ -82,14 +82,6 @@ module Mandelruby
       @char_list ||= ["X","O","#","*","o","%","=","-","."]
     end
 
-    def x_increment
-      @window.x_increment
-    end
-
-    def y_increment
-      @window.y_increment
-    end
-
     def column
       @window.column
     end
@@ -111,6 +103,16 @@ module Mandelruby
       @resolution = [80.0, 40.0]
     end
     
+    def column
+      @top_left[1].step(@bottom_right[1], y_increment).to_a
+    end
+
+    def row
+      @top_left[0].step(@bottom_right[0], x_increment).to_a
+    end
+
+    private
+
     def x_increment
       (@bottom_right[0] - @top_left[0]) / @resolution[0]
     end
@@ -119,13 +121,6 @@ module Mandelruby
       (@bottom_right[1] - @top_left[1]) / @resolution[1]
     end
 
-    def column
-      @top_left[1].step(@bottom_right[1], y_increment).to_a
-    end
-
-    def row
-      @top_left[0].step(@bottom_right[0], x_increment).to_a
-    end
   end
 
 end
