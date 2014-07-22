@@ -33,8 +33,8 @@ module Mandelruby
     end
 
     def each_pixel
-      column.each do |y|
-        row.each do |x|
+      @window.column.each do |y|
+        @window.row.each do |x|
           yield x,y
           @new_row = false
         end
@@ -80,14 +80,6 @@ module Mandelruby
 
     def char_list
       @char_list ||= ["X","O","#","*","o","%","=","-","."]
-    end
-
-    def column
-      @window.column
-    end
-
-    def row
-      @window.row
     end
 
   end
