@@ -18,6 +18,7 @@ module Mandelruby
   end
 
   class Mandelbrot
+    CHARACTERS = ["X","O","#","*","o","%","=","-","."]
 
     def initialize(color)
       # maximum iterations the recursive loop tries before bailing out and
@@ -41,15 +42,11 @@ module Mandelruby
       return " " if @iteration == @dwell
       
       if @color
-        character = char_list[order]
+        character = CHARACTERS[order]
         @crayon.color_in(character, order)
       else
-        char_list[order]
+        CHARACTERS[order]
       end
-    end
-
-    def char_list
-      ["X","O","#","*","o","%","=","-","."]
     end
 
     def order
