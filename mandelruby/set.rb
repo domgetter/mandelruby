@@ -55,10 +55,7 @@ module Mandelruby
     end
 
     def mandelbrot(c)
-      z = 0
-      @iteration = 0
-      @dwell.times { z = z**2 + c; @iteration += 1; break if (z.abs >= 2)}
-      character_for_iteration
+      Mandelbrot.new(@color).mandelbrot(c)
     end
 
     def char_list
@@ -68,7 +65,7 @@ module Mandelruby
   end
 
   class Mandelbrot
-    def initialize
+    def initialize(color)
       # maximum iterations the recursive loop tries before bailing out and
       # considers a point in the set
       @dwell = 100
