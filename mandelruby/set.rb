@@ -2,7 +2,7 @@ module Mandelruby
 
   class Set
 
-    def initialize
+    def initialize(color = false)
       @output = ""
       # maximum iterations the recursive loop tries before bailing out and
       # considers a point in the set
@@ -17,7 +17,7 @@ module Mandelruby
       @bg_color = rand(15..240)
       @fg_color = rand(15..240)
       # only display color output if --color option passed
-      @color = true if ARGV.include? "--color"
+      @color = color
     end
 
     def draw

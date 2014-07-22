@@ -1,4 +1,4 @@
 #Mandelbrot Set graphical generator
 require_relative 'mandelruby/set'
-
-puts Mandelruby::Set.new.draw
+color = ARGV.include?("--color")
+puts Mandelruby::Set.new(color).draw
