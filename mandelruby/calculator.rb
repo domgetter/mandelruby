@@ -2,6 +2,7 @@ module Mandelruby
   class Calculator
     attr_reader :character_resolution, :max_index
     def initialize(number_of_characters)
+      # how many iterations before output uses a different character for bail levels
       @character_resolution = 2
       @max_index = number_of_characters - 1
     end
