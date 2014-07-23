@@ -19,7 +19,7 @@ module Mandelruby
       return " " unless index
 
       character = CHARACTERS[index]
-      cartridge.color_in(character, index)
+      cartridge.print(character, index)
     end
   end
 end

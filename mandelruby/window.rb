@@ -2,6 +2,8 @@ require_relative 'pixel'
 
 module Mandelruby
   class Window
+    Resolution = Struct.new(:x, :y)
+
     attr_reader :top_left, :bottom_right, :resolution
     def initialize
       # display window from top-left corner to bottom-right corner of complex plane
@@ -9,7 +11,7 @@ module Mandelruby
       @bottom_right = Pixel.new(1.5, -1.0)
 
       #resolution of characters in output
-      @resolution = Pixel.new(80.0, 40.0)
+      @resolution = Resolution.new(80.0, 40.0)
     end
     
     def rows

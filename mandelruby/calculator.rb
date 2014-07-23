@@ -12,7 +12,7 @@ module Mandelruby
       return nil if iteration == :overdwell
 
       quotient = iteration / character_resolution
-      quotient > max_index ? max_index : quotient
+      [quotient, max_index].min
     end
 
     private
@@ -20,7 +20,7 @@ module Mandelruby
     def iteration_for(complex)
       (1..100).inject(0) do |z, iteration|
         break :overdwell if iteration == 100
-        break iteration-1 if z.abs >= 2
+        break iteration - 1 if z.abs >= 2
         z**2 + complex
       end
     end

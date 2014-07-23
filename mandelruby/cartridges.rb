@@ -1,6 +1,6 @@
 module Mandelruby
   class Black
-    def color_in(character, *args)
+    def print(character, *args)
       character
     end
   end
@@ -12,18 +12,18 @@ module Mandelruby
       @foreground = rand(15..240)
     end
 
-    def color_in(character, offset)
+    def print(character, offset)
       bg_color(offset) + fg_color(offset) + character + reset_color
     end
 
     private
 
     def bg_color(offset)
-      ["\e[48;5;", (background + offset), "m"].join
+      "\e[48;5;#{background + offset}m"
     end
 
     def fg_color(offset)
-      ["\e[38;5;", (foreground + offset), "m"].join
+      "\e[38;5;#{foreground + offset}m"
     end
 
     def reset_color
