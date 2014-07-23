@@ -18,26 +18,28 @@ module Mandelruby
 
     private
 
+    def complex_to_character(c)
+      index = mandelbrot_index(c, CHARACTERS.size-1)
+      return " " unless index
+
+      character = CHARACTERS[index]
+      @cartridge.color_in(character, index)
+    end
+
     def iteration_for(complex)
       (1..100).inject(0) do |z, iteration|
-        break 100 if iteration == 100
+        break :overdwell if iteration == 100
         break iteration-1 if z.abs >= 2
         z**2 + complex
       end
     end
 
-    def complex_to_character(c)
-      iteration = iteration_for(c)
-      return " " if iteration == 100
+    def mandelbrot_index(complex, max)
+      iteration = iteration_for(complex)
+      return nil if iteration == :overdwell
 
-      order = orderize(iteration)
-      character = CHARACTERS[order]
-      @cartridge.color_in(character, order)
-    end
-
-    def orderize(iteration)
-      quotient = iteration/@character_resolution
-      quotient > 8 ? 8 : quotient
+      quotient = iteration / @character_resolution
+      quotient > max ? max : quotient
     end
   end
 end
