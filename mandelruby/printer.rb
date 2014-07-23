@@ -1,3 +1,5 @@
+require_relative 'calculator'
+
 module Mandelruby
   class Printer
     CHARACTERS = ["X","O","#","*","o","%","=","-","."]
@@ -10,36 +12,15 @@ module Mandelruby
       @character_resolution = 2
       # only display color output if --color option passed
       @cartridge = cartridge
+      @calculator = Calculator.new(CHARACTERS.size)
     end
 
     def print_pixel(pixel)
-      complex_to_character(pixel.to_c)
-    end
-
-    private
-
-    def complex_to_character(c)
-      index = mandelbrot_index(c, CHARACTERS.size-1)
+      index = @calculator.mandelbrot_index(pixel.to_c)
       return " " unless index
 
       character = CHARACTERS[index]
       @cartridge.color_in(character, index)
-    end
-
-    def iteration_for(complex)
-      (1..100).inject(0) do |z, iteration|
-        break :overdwell if iteration == 100
-        break iteration-1 if z.abs >= 2
-        z**2 + complex
-      end
-    end
-
-    def mandelbrot_index(complex, max)
-      iteration = iteration_for(complex)
-      return nil if iteration == :overdwell
-
-      quotient = iteration / @character_resolution
-      quotient > max ? max : quotient
     end
   end
 end
