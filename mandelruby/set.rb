@@ -53,8 +53,8 @@ module Mandelruby
     end
 
     def each_pixel
-      row.each do |y|
-        column.each do |x|
+      rows.each do |y|
+        columns.each do |x|
           yield x,y
           @new_row = false
         end
@@ -103,33 +103,49 @@ module Mandelruby
     end
 
     def x_increment
-      (right - left)/@resolution[0]
+      domain/@resolution[0]
     end
 
     def y_increment
-      (top - bottom)/@resolution[1]
+      range/@resolution[1]
     end
 
-    def column
-      left.step(right, x_increment).to_a
+    def columns
+      x_values.to_a
     end
 
-    def row
-      top.step(bottom, -y_increment).to_a
+    def rows
+      y_values.to_a
     end
-    
+
+    def x_values
+      left.step(right, x_increment)
+    end
+
+    def y_values
+      top.step(bottom, -y_increment)
+    end
+
+    def domain
+      right - left
+    end
+
+    def range
+      top - bottom
+    end
+
     def top
       (@center.y + 1.0/2**@zoom)
     end
-    
+
     def bottom
       (@center.y - 1.0/2**@zoom)
     end
-    
+
     def left
       (@center.x - 2.0/2**@zoom)
     end
-    
+
     def right
       (@center.x + 2.0/2**@zoom)
     end
