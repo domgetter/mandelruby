@@ -1,23 +1,40 @@
 module Mandelruby
+  Point = Struct.new(:x, :y)
 
   class Set
 
-    def initialize(color = false)
+    def initialize(options = {})
+      options[:center] ||= [-0.5, 0.0]
+      options[:zoom] ||= -0.3
+      options[:color] ||= false
+      options[:dwell] ||= 50
       @output = ""
+      
       # maximum iterations the recursive loop tries before bailing out and
       # considers a point in the set
-      @dwell = 100
+      @dwell = options[:dwell]
+      
       #resolution of characters in output
       @resolution = [80.0,40.0]
-      # display window from top-left corner to bottom-right corner of complex plane
-      @window = [[-2.5, 1.0], [1.5, -1.0]]
-      #how many iterations before output uses a different character for bail levels
-      @character_resolution = 2
+      
+      # center point of window on complex plane
+      @center = Point.new(options[:center][0].to_f, options[:center][1].to_f)
+      
+      # logarithmic zoom level. each increment of 1 will double the zoom
+      @zoom = options[:zoom]
+      
+      # how many iterations before output uses a different character for bail levels
+      @character_resolution = 1
+      
+      # offset of character array.  userful for zoomed in views
+      @character_offset = 2
+      
       # chooses a number between 15 and 240 for the starting color
       @bg_color = rand(15..240)
       @fg_color = rand(15..240)
+      
       # only display color output if --color option passed
-      @color = color
+      @color = options[:color]
     end
 
     def draw
@@ -36,8 +53,8 @@ module Mandelruby
     end
 
     def each_pixel
-      column.each do |y|
-        row.each do |x|
+      row.each do |y|
+        column.each do |x|
           yield x,y
           @new_row = false
         end
@@ -62,16 +79,16 @@ module Mandelruby
     end
 
     def color_index
-      char_list.index(char_list[@iteration/@character_resolution]) || 8
+      char_list.index(char_list[@iteration/@character_resolution-@character_offset]) || 8
     end
 
     def character_for_iteration
       return " " if @iteration == @dwell
       
       if @color
-        color_for_iteration + (char_list[@iteration/@character_resolution] || ".") + reset_color
+        color_for_iteration + (char_list[@iteration/@character_resolution-@character_offset] || ".") + reset_color
       else
-        char_list[@iteration/@character_resolution] || "."
+        char_list[@iteration/@character_resolution-@character_offset] || "."
       end
     end
 
@@ -86,19 +103,35 @@ module Mandelruby
     end
 
     def x_increment
-      (@window[1][0]-@window[0][0])/@resolution[0]
+      (right - left)/@resolution[0]
     end
 
     def y_increment
-      (@window[1][1]-@window[0][1])/@resolution[1]
+      (top - bottom)/@resolution[1]
     end
 
     def column
-      (@window[0][1]).step(@window[1][1],y_increment).to_a
+      left.step(right, x_increment).to_a
     end
 
     def row
-      (@window[0][0]).step(@window[1][0],x_increment).to_a
+      top.step(bottom, -y_increment).to_a
+    end
+    
+    def top
+      (@center.y + 1.0/2**@zoom)
+    end
+    
+    def bottom
+      (@center.y - 1.0/2**@zoom)
+    end
+    
+    def left
+      (@center.x - 2.0/2**@zoom)
+    end
+    
+    def right
+      (@center.x + 2.0/2**@zoom)
     end
 
   end
